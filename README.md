@@ -1,2 +1,19 @@
-# school-recruitment-web
-毕业设计 校园招聘平台 前端设计
+# recruitment-web
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
