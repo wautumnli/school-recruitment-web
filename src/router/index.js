@@ -1,31 +1,88 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-
 Vue.use(VueRouter)
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+NProgress.configure({ showSpinner: false })
 
 const routes = [
   {
+    // 懒加载
     path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/About.vue')
-    }
+    component: () => import('@/components/Index.vue'),
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        component: () => import('@/components/Home.vue'),
+        meta: {
+          title: 'USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/school',
+        component: () => import('@/components/School.vue'),
+        meta: {
+          title: '校招 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/pratice',
+        component: () => import('@/components/Pratice.vue'),
+        meta: {
+          title: '实习 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/interview',
+        component: () => import('@/components/Interview.vue'),
+        meta: {
+          title: '面经 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/file',
+        component: () => import('@/components/File.vue'),
+        meta: {
+          title: '资料 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/login',
+        component: () => import('@/components/Logon.vue'),
+        meta: {
+          title: '登录 - USC 校园招聘平台'
+        }
+      }
+    ]
   }
 ]
 
+/**
+ * router使用history模式s
+ */
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+/**
+ * 全局路由,跳转前
+ */
+router.beforeEach((to, from, next) => {
+  // 修改页面title
+  document.title = to.meta.title
+  NProgress.start()
+  // 继续进行
+  next()
+})
+
+/**
+ * 全局路由跳转后
+ */
+router.afterEach(() => {
+  NProgress.done()
 })
 
 export default router
