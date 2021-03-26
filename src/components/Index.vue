@@ -9,7 +9,7 @@
             background-color="#202329"
             text-color="#fff"
             active-text-color="#ffd04b">
-                <el-menu-item index="0" @click="goToPage('/')" class="e-m-first"><img src="../assets/img/logo1.jpg"></el-menu-item>
+                <el-menu-item index="0" @click="goToPage('/')" class="e-m-first"><img src="../assets/img/logo3.jpeg" style="max-width:100%"></el-menu-item>
                 <el-menu-item index="1" @click="goToPage('/')">首页</el-menu-item>
                 <el-menu-item index="2" @click="goToPage('/school')">校招</el-menu-item>
                 <el-menu-item index="3" @click="goToPage('/pratice')">实习</el-menu-item>
@@ -46,6 +46,7 @@ export default {
         margin-left: 1%;
     }
     .e-m-first {
+        width: 10%;
         margin-left: 20%;
     }
 }

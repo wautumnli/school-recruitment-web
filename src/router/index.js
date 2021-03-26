@@ -68,6 +68,14 @@ const router = new VueRouter({
 })
 
 /**
+ * 路由冗余报错处理
+ */
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
+/**
  * 全局路由,跳转前
  */
 router.beforeEach((to, from, next) => {
