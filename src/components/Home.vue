@@ -70,7 +70,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-            <el-row style="margin-top:20px;margin-left:42%">
+            <el-row style="margin-top:20px;text-align:center">
                 <el-button type="primary" class="more">查看更多</el-button>
             </el-row>
         </div>
@@ -121,7 +121,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-            <el-row style="margin-top:20px;margin-left:42%">
+            <el-row style="margin-top:20px;text-align:center">
                 <el-button type="primary" class="more">查看更多</el-button>
             </el-row>
         </div>
@@ -151,7 +151,7 @@
                     </el-card>
                 </el-col>
             </el-row>
-            <el-row style="margin-top:20px;margin-left:42%">
+            <el-row style="margin-top:20px;text-align:center">
                 <el-button type="primary" class="more">查看更多</el-button>
             </el-row>
         </div>
@@ -246,7 +246,7 @@ export default {
     white-space: nowrap;
 }
 .c-body{
-    height: 200px;
+    height: 230px;
 }
 .c-company-body {
     height: 300px;
