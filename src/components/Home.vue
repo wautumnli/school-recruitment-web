@@ -1,15 +1,5 @@
 <template>
     <div class="main">
-        <!-- 搜索区 -->
-        <el-card shadow="hover" style="width:60%;margin-left:20%">
-            <el-input placeholder="请输入职位或公司" v-model="input3" class="input-with-select" style="font-size:15px">
-                <el-select v-model="select" slot="prepend" placeholder="请选择" style="font-size:15px" default-first-option>
-                    <el-option label="校招" value="1"></el-option>
-                    <el-option label="实习" value="2"></el-option>
-                </el-select>
-                <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
-        </el-card>
         <!-- 校招区域 -->
         <el-divider>校招</el-divider>
         <div class="r-school">
@@ -163,8 +153,6 @@ export default {
     name: 'Home',
     data() {
         return {
-            input3: '',
-            select: '',
             zpSchoolList: [
                 { id: 1, jobName: "Java开发工程师", price: "16-25k", address: "北京", edu: "本科", type: "校招", cname: "京东集团", ctype: "零售", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20191129/3cdf5ba2149e309b38868b62ae9c22cabe1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_60,limit_0" },
                 { id: 2, jobName: "高级IOS开发工程师", price: "20-40k", address: "北京", edu: "硕士", type: "校招", cname: "网易杭州", ctype: "互联网", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/brand/92025.jpg?x-oss-process=image/resize,w_60,limit_0" },
@@ -196,7 +184,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .el-card .el-card__body {
     height: 100%;
     padding: 0;
@@ -222,8 +210,7 @@ export default {
     margin-bottom: 50px;
 }
 .r-school-t {
-    margin-bottom: 20px;
-    height: 50px;
+    height: 100px;
 }
 .el-card .el-input,
 .el-card .el-input__inner,

@@ -12,7 +12,6 @@
                 <el-menu-item index="0" @click="goToPage('/')" class="e-m-first"><img src="../assets/img/logo3.jpeg" style="max-width:90%"></el-menu-item>
                 <el-menu-item index="1" @click="goToPage('/')">首页</el-menu-item>
                 <el-menu-item index="2" @click="goToPage('/school')">校招</el-menu-item>
-                <el-menu-item index="3" @click="goToPage('/pratice')">实习</el-menu-item>
                 <el-menu-item index="4" @click="goToPage('/interview')">面经</el-menu-item>
                 <el-menu-item index="5" @click="goToPage('/file')">资料</el-menu-item>
                 <el-menu-item index="6" @click="goToPage('/login')" class="e-m-logon">登录/注册</el-menu-item>
@@ -37,7 +36,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .el-menu-item {
     font-size: 18px;
 }

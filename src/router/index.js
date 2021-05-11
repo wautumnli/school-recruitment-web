@@ -27,13 +27,6 @@ const routes = [
         }
       },
       {
-        path: '/pratice',
-        component: () => import('@/components/Pratice.vue'),
-        meta: {
-          title: '实习 - USC 校园招聘平台'
-        }
-      },
-      {
         path: '/interview',
         component: () => import('@/components/Interview.vue'),
         meta: {
