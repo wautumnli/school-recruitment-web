@@ -3,50 +3,55 @@
         <el-card style="width:60%;margin-left:20%">
             <el-row :gutter="20">
                 <el-col :span="6">
-                    <el-input v-model="input" placeholder="请输入用户名称" style="widht:200px"></el-input>
-                </el-col>
-                <el-col :span="6">
                     <el-input v-model="input" placeholder="请输入文件名称" style="widht:200px"></el-input>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
+                    <el-date-picker
+                        v-model="value1"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                    </el-date-picker>
+                </el-col>
+                <el-col :span="7">
                     <el-button>搜索</el-button>
+                </el-col>
+                <el-col :span="3">
+                    <el-button type="danger" @click="dialogFormVisible1 = true">文件上传</el-button>
                 </el-col>
             </el-row>
         </el-card>
         <el-table
-            style="width:1100px;margin-left:20%;margin-top:20px;background:white"
+            style="width:1100px;margin-left:20%;margin-top:50px;background:white"
             :data="tableData"
             border>
             <el-table-column
             prop="date"
             label="文件名称"
-            width="170">
+            width="200">
             </el-table-column>
             <el-table-column
             prop="name"
             label="文件类型"
-            width="150">
+            width="200">
             </el-table-column>
             <el-table-column
             prop="province"
             label="文件大小"
-            width="150">
-            </el-table-column>
-            <el-table-column
-            prop="city"
-            label="发布人"
-            width="150">
+            width="200">
             </el-table-column>
             <el-table-column
             prop="address"
             label="发布时间"
-            width="320">
+            width="340">
             </el-table-column>
             <el-table-column
             label="操作"
             width="160">
             <template slot-scope="scope">
-                <el-button type="text" size="small" @click="openFullScreen2">下载</el-button>
+                <el-button type="text" @click="openFullScreen2">删除</el-button>
+                <el-button type="text">下载</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -57,12 +62,24 @@
             :total="400">
             </el-pagination>
         </div>
+        <el-dialog title="文件上传" :visible.sync="dialogFormVisible1" center width="500px">
+            <el-upload
+                class="upload-demo"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                multiple
+                :limit="3"
+                :on-exceed="handleExceed"
+                :file-list="fileList">
+                <el-button size="small" type="primary">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip">文件大小不超过10mb</div>
+            </el-upload>
+        </el-dialog>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'File',
+    name: 'UserFile',
     data() {
         return{
             tableData: [{
@@ -115,7 +132,10 @@ export default {
                 address: '2021-05-10 16:42',
                 zip: 200333
             }],
-            input:''
+            input:'',
+            value1:'',
+            dialogFormVisible1: false,
+            fileList: [{name: 'Java知识点汇总.pdf', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: '并发编程艺术.pdf', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
         }
     },
     methods: {

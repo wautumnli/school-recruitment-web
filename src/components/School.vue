@@ -45,7 +45,7 @@
                 <el-col :span="20">
                     <el-row>
                         <el-col :span="10">
-                            <el-link type="primary" style="font-size:22px">招聘职业名称  【北京】</el-link>
+                            <el-link type="primary" style="font-size:22px" @click="dialogFormVisible1 = true">招聘职业名称  【北京】</el-link>
                         </el-col>
                         <el-col :span="8" :offset="2">
                             <el-link type="primary" style="font-size:22px">公司名称</el-link>
@@ -207,6 +207,36 @@
             :total="400">
             </el-pagination>
         </div>
+        <el-dialog title="招聘内容" :visible.sync="dialogFormVisible1" center width="900px">
+            <el-form :model="form">
+                <el-form-item label="职位" :label-width="'100px'">
+                    <el-input v-model="form.n1" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="公司" :label-width="'100px'">
+                    <el-input v-model="form.n3" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="工资" :label-width="'100px'">
+                    <el-input v-model="form.n4" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="学历" :label-width="'100px'">
+                    <el-input v-model="form.n5" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="招聘类型" :label-width="'100px'">
+                    <el-input v-model="form.n6" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" :label-width="'100px'">
+                    <el-input v-model="form.n7" autocomplete="off" readonly></el-input>
+                </el-form-item>
+                <el-form-item label="详细内容" :label-width="'100px'">
+                    <el-input v-model="form.n2" autocomplete="off" readonly type="textarea"
+  :autosize="{ minRows: 1, maxRows: 10}"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible1 = false">取 消</el-button>
+                <el-button type="primary" @click="dialogFormVisible1 = false">确 定</el-button>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -234,7 +264,17 @@ export default {
                 label: '北京烤鸭'
             }],
             value: '',
-            value2: []
+            value2: [],
+            dialogFormVisible1: false,
+            form: {
+                n1: 'Java开发',
+                n2:'1、参与业务线后端服务的设计、开发、优化等研发工作，保证产品的质量和开发进度\n2、和产品等团队合作，确保前后端模块的协同工作;\n3、参与研究新兴技术，对产品进行持续优化。',
+                n3:'京东集团',
+                n4:'10-23k',
+                n5:'本科',
+                n6:'校招',
+                n7:'wwwtest@163.com'
+            }
         }
     }
 }

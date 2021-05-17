@@ -46,6 +46,62 @@ const routes = [
         meta: {
           title: '登录 - USC 校园招聘平台'
         }
+      },
+      {
+        path: '/user/interview',
+        component: () => import('@/components/UserInterview.vue'),
+        meta: {
+          title: '登录 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/user/file',
+        component: () => import('@/components/UserFile.vue'),
+        meta: {
+          title: '登录 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/user/school',
+        component: () => import('@/components/UserSchool.vue'),
+        meta: {
+          title: '登录 - USC 校园招聘平台'
+        }
+      }
+    ]
+  },
+  {
+    path: '/admin',
+    component: () => import('@/components/Admin.vue'),
+    redirect: '/admin/user',
+    children: [
+      {
+        path: '/admin/user',
+        component: () => import('@/components/AdminUser.vue'),
+        meta: {
+          title: '后台管理 - 用户'
+        }
+      },
+      {
+        path: '/admin/file',
+        component: () => import('@/components/AdminFile.vue'),
+        meta: {
+          title: '后台管理 - 文件'
+        }
+      },
+      {
+        path: '/admin/interview',
+        component: () => import('@/components/AdminInterview.vue'),
+        meta: {
+          title: '后台管理 - 面经'
+        }
+      },
+      {
+        path: '/admin/school',
+        component: () => import('@/components/AdminSchool.vue'),
+        meta: {
+          title: '后台管理 - 招聘信息'
+        }
       }
     ]
   }
