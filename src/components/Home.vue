@@ -5,55 +5,49 @@
         <div class="r-school">
             <el-card class="r-school-t">
                 <el-menu mode="horizontal" default-active="1">
-                    <el-menu-item index="1">IT</el-menu-item>
-                    <el-menu-item index="2">计算机</el-menu-item>
-                    <el-menu-item index="3">物流</el-menu-item>
-                    <el-menu-item index="4">金融</el-menu-item>
-                    <el-menu-item index="5">医疗</el-menu-item>
-                    <el-menu-item index="6">供应链</el-menu-item>
-                    <el-menu-item index="7">娱乐</el-menu-item>
-                    <el-menu-item index="8">传媒</el-menu-item>
-                    <el-menu-item index="9">法律</el-menu-item>
+                    <el-menu-item v-for="item in industry" :index="item.industry" v-bind:key="item.industry">
+                        {{item.industry}}
+                    </el-menu-item>
                 </el-menu>
             </el-card>
             <el-row :gutter="10" class="c-card">
-                <el-col :span="8" v-for="item in zpSchoolList" :key="item.id">
+                <el-col :span="8" v-for="item in school" :key="item.id">
                     <el-card class="c-body">
                         <div class="c-inner">
                             <el-row>
                                 <el-col :span="16">
                                     <el-link type="info" class="c-name">
-                                        {{item.jobName}}
+                                        {{item.position}}
                                     </el-link>
                                 </el-col>
                                 <el-col :span="8">
-                                    <span class="c-price">{{item.price}}</span>
+                                    <span class="c-price">{{item.wages}}</span>
                                 </el-col>
                             </el-row>
                             <el-row :gutter="50">
                                 <el-col :span="3">
-                                    <el-tag type="success">{{item.address}}</el-tag>
+                                    <el-tag type="success">{{item.workPlace}}</el-tag>
                                 </el-col>
                                 <el-col :span="3">
-                                    <el-tag type="primary">{{item.edu}}</el-tag>
+                                    <el-tag type="primary">{{item.education}}</el-tag>
                                 </el-col>
                                 <el-col :span="3" :offset="12">
-                                    <el-tag type="danger">{{item.type}}</el-tag>
+                                    <el-tag type="danger">{{item.recruitType == 1?'校招':'实习  '}}</el-tag>
                                 </el-col>
                             </el-row>
                             <el-divider></el-divider>
                             <el-row class="company">
                                 <el-col :span="5">
-                                    <img style="width:70%" :src="item.src">
+                                    <img style="width:70%" :src="item.companyM.imgUrl">
                                 </el-col>
                                 <el-col :span="8" style="margin-top:15px;">
-                                    <el-link type="info">{{item.cname}}</el-link>
+                                    <el-link type="info">{{item.companyM.companyName}}</el-link>
                                 </el-col>
                                 <el-col :span="5" style="margin-top:15px;position:absolute;right:40px">
-                                    {{item.ctype}}
+                                    {{item.companyM.companyStatus}}
                                 </el-col>
                                 <el-col :span="3" style="margin-top:15px;position:absolute;right:0">
-                                    {{item.cstate}}
+                                    {{item.companyM.companyType}}
                                 </el-col>
                             </el-row>
                         </div>
@@ -61,50 +55,50 @@
                 </el-col>
             </el-row>
             <el-row style="margin-top:20px;text-align:center">
-                <el-button type="primary" class="more">查看更多</el-button>
+                <el-button type="primary" class="more" @click="gotoPage">查看更多</el-button>
             </el-row>
         </div>
         <!-- 实习区域 -->
         <el-divider>实习</el-divider>
         <div class="r-pratice">
             <el-row :gutter="10" class="c-card">
-                <el-col :span="8" v-for="item in zpPraticeList" :key="item.id">
+                <el-col :span="8" v-for="item in practice" :key="item.id">
                     <el-card class="c-body">
                         <div class="c-inner">
                             <el-row>
                                 <el-col :span="16">
                                     <el-link type="info" class="c-name">
-                                        {{item.jobName}}
+                                        {{item.position}}
                                     </el-link>
                                 </el-col>
                                 <el-col :span="8">
-                                    <span class="c-price">{{item.price}}</span>
+                                    <span class="c-price">{{item.wages}}</span>
                                 </el-col>
                             </el-row>
                             <el-row :gutter="50">
                                 <el-col :span="3">
-                                    <el-tag type="success">{{item.address}}</el-tag>
+                                    <el-tag type="success">{{item.workPlace}}</el-tag>
                                 </el-col>
                                 <el-col :span="3">
-                                    <el-tag type="primary">{{item.edu}}</el-tag>
+                                    <el-tag type="primary">{{item.education}}</el-tag>
                                 </el-col>
                                 <el-col :span="3" :offset="12">
-                                    <el-tag type="danger">{{item.type}}</el-tag>
+                                    <el-tag type="danger">{{item.recruitType=='1'?'校招':'实习'}}</el-tag>
                                 </el-col>
                             </el-row>
                             <el-divider></el-divider>
                             <el-row class="company">
                                 <el-col :span="5">
-                                    <img style="width:70%" :src="item.src">
+                                    <img style="width:70%" :src="item.companyM.imgUrl">
                                 </el-col>
                                 <el-col :span="8" style="margin-top:15px;">
-                                    <el-link type="info">{{item.cname}}</el-link>
+                                    <el-link type="info">{{item.companyM.companyName}}</el-link>
                                 </el-col>
                                 <el-col :span="5" style="margin-top:15px;position:absolute;right:40px">
-                                    {{item.ctype}}
+                                    {{item.companyM.companyType}}
                                 </el-col>
                                 <el-col :span="3" style="margin-top:15px;position:absolute;right:0">
-                                    {{item.cstate}}
+                                    {{item.companyM.companyStatus}}
                                 </el-col>
                             </el-row>
                         </div>
@@ -119,22 +113,22 @@
         <el-divider>热门企业</el-divider>
         <div class="r-company">
             <el-row :gutter="20" class="c-card">
-                <el-col :span="6" v-for="item in zpCompany" :key="item.id" style="margin-top:20px">
+                <el-col :span="6" v-for="item in company" :key="item.id" style="margin-top:20px">
                     <el-card class="c-company-body">
                         <div class="c-inner">
                             <el-row style="text-align:center">
-                                <img :src="item.src">
+                                <img :src="item.imgUrl + '?x-oss-process=image/resize,w_100,limit_0'">
                             </el-row>
                             <el-row style="text-align:center;margin-top:10px">
-                                <el-link style="font-size:20px">{{item.cname}}</el-link>
+                                <el-link style="font-size:20px">{{item.companyName}}</el-link>
                             </el-row>
                             <el-row style="text-align:center;margin-top:20px;font-size:12px">
-                                <span style="color: #8d92a1;">{{item.ctype}}</span>
-                                <span style="color: #8d92a1;margin-left:10px">{{item.cstate}}</span>
+                                <span style="color: #8d92a1;">{{item.companyType}}</span>
+                                <span style="color: #8d92a1;margin-left:10px">{{item.companyStatus}}</span>
                             </el-row>
                             <el-row style="text-align:center;margin-top:20px">
                                 <el-button plain style="color:#8d92a1;font-size:10px">
-                                    <span style="color:#fd7240;">{{item.jobNum}}</span>个职位招聘
+                                    <span style="color:#fd7240;">{{item.recruitNumber}}</span>个职位招聘
                                 </el-button>
                             </el-row>
                         </div>
@@ -153,34 +147,27 @@ export default {
     name: 'Home',
     data() {
         return {
-            zpSchoolList: [
-                { id: 1, jobName: "Java开发工程师", price: "16-25k", address: "北京", edu: "本科", type: "校招", cname: "京东集团", ctype: "零售", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20191129/3cdf5ba2149e309b38868b62ae9c22cabe1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 2, jobName: "高级IOS开发工程师", price: "20-40k", address: "北京", edu: "硕士", type: "校招", cname: "网易杭州", ctype: "互联网", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/brand/92025.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 3, jobName: "数据仓库工程师", price: "25-45k", address: "北京", edu: "硕士", type: "校招", cname: "理性汽车", ctype: "智能硬件", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/chatphoto/20190918/11a8f3478bf1ed2878b5e9e3a0db2dcf89917d8a223eca14e297f318ebe8963b_s.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 4, jobName: "效绩管理(MJ004101)", price: "25-40k", address: "北京", edu: "本科", type: "校招", cname: "松果出行", ctype: "移动互联网", cstate: "C轮", src: "https://img.bosszhipin.com/beijin/mcs/chatphoto/20180424/d131dbb57fafa07e8d8a5babdc86de30baf241ac2dd9bc11f6021b9b76fdd848.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 5, jobName: "腾讯视频海外产品经理", price: "25-50k·16薪", address: "深圳", edu: "硕士", type: "校招", cname: "腾讯", ctype: "互联网", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20200430/4204e9c9f200b00b77fb59d093acd281be1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 6, jobName: "数据分析工程师-供应链研发", price: "25-50k·14薪", address: "北京", edu: "硕士", type: "校招", cname: "网易杭州", ctype: "完美世界", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20200402/8d53f00b8309c5edefc54538c0a2c675be1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_60,limit_0" }
-            ],
-            zpPraticeList: [
-                { id: 1, jobName: "Java开发工程师", price: "16-25k", address: "北京", edu: "本科", type: "实习", cname: "京东集团", ctype: "零售", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20191129/3cdf5ba2149e309b38868b62ae9c22cabe1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 2, jobName: "高级IOS开发工程师", price: "20-40k", address: "北京", edu: "硕士", type: "实习", cname: "网易杭州", ctype: "互联网", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/brand/92025.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 3, jobName: "数据仓库工程师", price: "25-45k", address: "北京", edu: "硕士", type: "实习", cname: "理性汽车", ctype: "智能硬件", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/chatphoto/20190918/11a8f3478bf1ed2878b5e9e3a0db2dcf89917d8a223eca14e297f318ebe8963b_s.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 4, jobName: "效绩管理(MJ004101)", price: "25-40k", address: "北京", edu: "本科", type: "实习", cname: "松果出行", ctype: "移动互联网", cstate: "C轮", src: "https://img.bosszhipin.com/beijin/mcs/chatphoto/20180424/d131dbb57fafa07e8d8a5babdc86de30baf241ac2dd9bc11f6021b9b76fdd848.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 5, jobName: "腾讯视频海外产品经理", price: "25-50k·16薪", address: "深圳", edu: "硕士", type: "实习", cname: "腾讯", ctype: "互联网", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20200430/4204e9c9f200b00b77fb59d093acd281be1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_60,limit_0" },
-                { id: 6, jobName: "数据分析工程师-供应链研发", price: "25-50k·14薪", address: "北京", edu: "硕士", type: "实习", cname: "网易杭州", ctype: "完美世界", cstate: "已上市", src: "https://img.bosszhipin.com/beijin/mcs/bar/20200402/8d53f00b8309c5edefc54538c0a2c675be1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_60,limit_0" }
-            ],
-            zpCompany: [
-                { id: 1, cname: "京东集团", ctype: "电子商务", cstate: "已上市", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/mcs/bar/20191129/3cdf5ba2149e309b38868b62ae9c22cabe1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_90,limit_0" },
-                { id: 2, cname: "好未来", ctype: "互联网", cstate: "已上市", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/mcs/bar/20201205/34de43bc4a6dfa1dee040f5551a71a60be1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_90,limit_0" },
-                { id: 3, cname: "滴滴", ctype: "移动互联网", cstate: "D轮以上", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/mcs/bar/20201205/25965fbe2c0440e760df2b6a6b81d7c2be1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_90,limit_0" },
-                { id: 4, cname: "美团点评", ctype: "O2O", cstate: "已上市", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/upload/com/logo/20201107/9a15865bc32a3924b33b20a01e6316ea2d08c50abcbdc33aec2214bd902b556f.png?x-oss-process=image/resize,w_90,limit_0" },
-                { id: 5, cname: "华为", ctype: "计算机软件", cstate: "不需要融资", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/upload/com/logo/20200429/8f64c9d0b30a53c434b26799ca78966cec9b49ecaf1604cb263748f03d5c2b0f.png?x-oss-process=image/resize,w_90,limit_0" },
-                { id: 6, cname: "腾讯", ctype: "互联网", cstate: "已上市", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/mcs/bar/20200430/4204e9c9f200b00b77fb59d093acd281be1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_90,limit_0" },
-                { id: 7, cname: "Lianjia.链家", ctype: "地产中介", cstate: "C轮", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/mcs/bar/20191216/3e371e809d4951177b447e957f9f78d4be1bd4a3bd2a63f070bdbdada9aad826.jpg?x-oss-process=image/resize,w_90,limit_0"},
-                { id: 8, cname: "百度", ctype: "互联网", cstate: "已上市", jobNum: 1024, src: "https://img.bosszhipin.com/beijin/logo/0e0d441a2f93a236536f20e8277bf4dbbe1bd4a3bd2a63f070bdbdada9aad826.png?x-oss-process=image/resize,w_90,limit_0"}
-            ]
+            industry: [],
+            school: [],
+            practice: [],
+            company: []
         }
-    }
+    },
+    created() {
+        this.init();
+    },
+    methods: {
+        async init() {
+            const {data} = await this.$http.post('/recruitm/home');
+            this.industry = data.data.industry;
+            this.school = data.data.school;
+            this.practice = data.data.practice;
+            this.company = data.data.company;
+        },
+        gotoPage() {
+            this.$router.push("/school");
+        }
+    },
 }
 </script>
 

@@ -23,7 +23,7 @@ const routes = [
         path: '/school',
         component: () => import('@/components/School.vue'),
         meta: {
-          title: '校招 - USC 校园招聘平台'
+          title: '招聘 - USC 校园招聘平台'
         }
       },
       {
@@ -41,31 +41,31 @@ const routes = [
         }
       },
       {
-        path: '/login',
-        component: () => import('@/components/Logon.vue'),
-        meta: {
-          title: '登录 - USC 校园招聘平台'
-        }
-      },
-      {
         path: '/user/interview',
         component: () => import('@/components/UserInterview.vue'),
         meta: {
-          title: '登录 - USC 校园招聘平台'
+          title: '用户面经 - USC 校园招聘平台'
         }
       },
       {
         path: '/user/file',
         component: () => import('@/components/UserFile.vue'),
         meta: {
-          title: '登录 - USC 校园招聘平台'
+          title: '用户文件 - USC 校园招聘平台'
         }
       },
       {
         path: '/user/school',
         component: () => import('@/components/UserSchool.vue'),
         meta: {
-          title: '登录 - USC 校园招聘平台'
+          title: '用户招聘信息 - USC 校园招聘平台'
+        }
+      },
+      {
+        path: '/user/info',
+        component: () => import('@/components/UserInfo.vue'),
+        meta: {
+          title: '用户信息 - USC 校园招聘平台'
         }
       }
     ]
@@ -73,8 +73,15 @@ const routes = [
   {
     path: '/admin',
     component: () => import('@/components/Admin.vue'),
-    redirect: '/admin/user',
+    redirect: '/admin/home',
     children: [
+      {
+        path: '/admin/home',
+        component: () => import('@/components/AdminHome.vue'),
+        meta: {
+          title: '后台管理 - 详细页'
+        }
+      },
       {
         path: '/admin/user',
         component: () => import('@/components/AdminUser.vue'),
@@ -104,6 +111,20 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/components/Logon.vue'),
+    meta: {
+      title: '登录 - USC 校园招聘平台'
+    }
+  },
+  {
+    path: '/regist',
+    component: () => import('@/components/Register.vue'),
+    meta: {
+      title: '注册 - USC 校园招聘平台'
+    }
   }
 ]
 
@@ -131,6 +152,9 @@ router.beforeEach((to, from, next) => {
   // 修改页面title
   document.title = to.meta.title
   NProgress.start()
+  if(to.path === '/login' || to.path === '/regist') return next()
+  const token = localStorage.getItem("token");
+  if(!token) return next("/login")
   // 继续进行
   next()
 })

@@ -3,98 +3,64 @@
         <el-card>
             <el-row :gutter="20">
                 <el-col :span="6">
-                    <el-input placeholder="文件名称"></el-input>
+                    <el-input v-model="search.fileName" placeholder="文件名称"></el-input>
                 </el-col>
                 <el-col :span="6">
-                    <el-input placeholder="发布人"></el-input>
-                </el-col>
-                <el-col :span="6">
-                      <el-time-picker
-                        is-range
-                        v-model="value1"
-                        range-separator="至"
-                        start-placeholder="开始时间"
-                        end-placeholder="结束时间"
-                        placeholder="选择时间范围">
-                    </el-time-picker>
+                    <el-input v-model="search.userName" placeholder="发布人"></el-input>
                 </el-col>
                 <el-col :span="2" :offset="1">
-                    <el-button type="primary">搜索</el-button>
+                    <el-button type="primary" @click="searchFile">搜索</el-button>
                 </el-col>
             </el-row>
         </el-card>
         <el-card style="margin-top:20px">
         <el-table
             style="width:100%margin-left:20%;margin-top:20px;background:white"
-            :data="tableData"
+            :data="file"
             border>
             <el-table-column
-            prop="date"
+            prop="fileName"
             label="文件名称"
-            width="200">
+            width="300">
             </el-table-column>
             <el-table-column
-            prop="name"
+            prop="fileType"
             label="文件类型"
-            width="200">
+            width="300">
             </el-table-column>
             <el-table-column
-            prop="province"
+            prop="fileSize"
             label="文件大小"
-            width="200">
+            width="150">
             </el-table-column>
             <el-table-column
-            prop="city"
+            prop="userName"
             label="发布人"
-            width="200">
+            width="150">
             </el-table-column>
             <el-table-column
-            prop="address"
+            prop="createTime"
             label="发布时间"
-            width="400">
+            width="300">
             </el-table-column>
             <el-table-column
             label="操作"
             width="200">
             <template slot-scope="scope">
-                <el-button type="text">删除</el-button>
-                <el-button type="text">下载</el-button>
+                <el-button type="text" @click="deleteFile(scope.row)">删除</el-button>
+                <el-button type="text" @click="checkFile(scope.row)">查看</el-button>
             </template>
             </el-table-column>
         </el-table>
-                <div style="text-align:center;margin-top:20px">
+        <div style="text-align:center;margin-top:20px">
             <el-pagination
-            :page-size="4"
+            :page-size="8"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
             layout="total, prev, pager, next, jumper"
-            :total="400">
+            :total="total">
             </el-pagination>
         </div>
-                <el-dialog title="添加用户" :visible.sync="dialogFormVisible1" center width="600px">
-            <el-form :model="form">
-                <el-form-item label="账号" :label-width="'100px'">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" :label-width="'100px'">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" :label-width="'100px'">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="昵称" :label-width="'100px'">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="账号类型" :label-width="'100px'">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                    <el-option label="求职用户" value="shanghai"></el-option>
-                    <el-option label="招聘用户" value="beijing"></el-option>
-                </el-select>
-                </el-form-item>
-            </el-form>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible1 = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible1 = false">添 加</el-button>
-            </div>
-        </el-dialog>
         </el-card>
     </div>
 </template>
@@ -104,55 +70,60 @@ export default {
     name: 'AdminFile',
     data(){
         return{
-                    options: [{
-          value: '选项1',
-          label: '已审核'
-        }, {
-          value: '选项2',
-          label: '未审核'
-        }],
-        value: '',
-        tableData: [{
-          date: 'Java知识汇总',
-          name: 'pdf',
-          province: '20M',
-          city: '万秋里',
-          address: '2021-05-10 15:32'
-        }, {
-          date: 'Java知识汇总',
-          name: 'pdf',
-          province: '20M',
-          city: '万秋里',
-          address: '2021-05-10 15:32'
-        }, {
-          date: 'Java知识汇总',
-          name: 'pdf',
-          province: '20M',
-          city: '万秋里',
-          address: '2021-05-10 15:32'
-        }, {
-          date: 'Java知识汇总',
-          name: 'pdf',
-          province: '20M',
-          city: '万秋里',
-          address: '2021-05-10 15:32'
-        }, {
-          date: 'Java知识汇总',
-          name: 'pdf',
-          province: '20M',
-          city: '万秋里',
-          address: '2021-05-10 15:32'
-        }, {
-          date: 'Java知识汇总',
-          name: 'pdf',
-          province: '20M',
-          city: '万秋里',
-          address: '2021-05-10 15:32'
-        }],
-        dialogFormVisible1: false,
-        form: {
-
+            file: [],
+            currentPage: 1,
+            total: 0,
+            search: {
+                pageNum: 1,
+                pageSize: 8,
+                fileName: ''
+            },
+            fileCondition: {}
         }
+    },
+    created() {
+        this.init();
+    },
+    methods: {
+        async init() {
+            const {data} = await this.$http.post("/file/home", this.search);
+            this.file = data.data.file.records;
+            this.currentPage = data.data.file.current;
+            this.total = data.data.file.total;
+        },
+        async searchFile() {
+            const {data} = await this.$http.post("/file/home", this.search);
+            this.file = data.data.file.records;
+            this.currentPage = data.data.file.current;
+            this.total = data.data.file.total;
+        },
+        checkFile(row) {
+            window.open(row.fileUrl);
+        },
+        async deleteFile(row) {
+            this.fileCondition.id = row.id;
+            this.fileCondition.fileName = row.fileName;
+            const {data} = await this.$http.post("/file/delete", this.fileCondition);
+            if(data.data.delete == 1) {
+                this.$message({
+                    message: '删除成功',
+                    type: 'success'
+                });
+                this.init();
+            } else {
+                this.$message({
+                    message: '删除失败',
+                    type: 'error'
+                });
+            }
+            this.init();
+        },
+        async handleCurrentChange(val) {
+            this.search.pageNum = val;
+            const {data} = await this.$http.post('/file/home', this.search);
+            this.file = data.data.file.records;
+            this.total = data.data.file.total;
+            this.currentPage = data.data.file.current;
         }
     }
 }

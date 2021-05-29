@@ -2,147 +2,79 @@
     <div>
         <!-- 分类 -->
         <el-card shadow="hover" style="width:60%;margin-left:20%">
-            <el-row>
-                <el-col :span="8">
-                    <span style="color:#61687c;font-size:15px">招聘职业：</span>
-                    <el-select v-model="value" clearable placeholder="请输入">
-                        <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-col>
+            <el-row :gutter="20">
                 <el-col :span="7">
+                    <el-input v-model="searchText" placeholder="请输入标题或职位"></el-input>
+                </el-col>
+                <el-col :span="6">
                     <span style="color:#61687c;font-size:15px">公司：</span>
-                    <el-select v-model="value" clearable placeholder="请选择">
+                    <el-select v-model="companyName" clearable placeholder="请选择" @clear="delVal">
                         <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
+                        v-for="item in companyList"
+                        :key="item.companyName"
+                        :label="item.companyName"
+                        :value="item.companyName">
                         </el-option>
                     </el-select>
                 </el-col>
-                <el-button type="primary">搜索</el-button>
+                <el-col :span="4">
+                    <el-input v-model="test01" placeholder="发布人名称"></el-input>
+                </el-col>
+                <el-col :span="3" :offset="4">
+                    <el-button type="primary" @click="searchInterview">搜索</el-button>
+                </el-col>
             </el-row>
         </el-card>
 
         <!-- 内容 -->
-                <el-card style="width:60%;margin-left:20%;margin-top:10px">
+        <el-card style="width:60%;margin-left:20%;margin-top:10px" v-for="item in interview" v-bind:key="item.id">
             <el-row>
-                <el-link style="font-size:22px;" type="primary" @click="dialogFormVisible1 = true">面经标题</el-link>
+                <el-link style="font-size:22px;" type="primary" @click="checkDetail(item)">{{item.title}}</el-link>
             </el-row>
             <el-row style="margin-top:10px">
-                <span style="font-size:15px;color:rgb(32, 35, 41)">发布人</span>
+                <span style="font-size:15px;color:rgb(32, 35, 41)">{{item.userName}}</span>
                 <span style="margin-left:10px;color:#61687c;font-size:15px">|</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">2020-10-21</span>
-                <el-badge :value="12" style="margin-left:10px;color:#61687c;font-size:15px;float:right">
-                    <el-button size="mini" type="primary">点赞</el-button>
+                <span style="margin-left:10px;color:#61687c;font-size:15px">{{item.createTime}}</span>
+                <el-badge :value="item.hot" style="margin-left:10px;color:#61687c;font-size:15px;float:right">
+                    <el-button size="mini" type="primary" @click="addHot(item)">点赞</el-button>
                 </el-badge>
             </el-row>
             <el-row style="margin-top:10px">
-                <el-tag type="info" size="mini">职位</el-tag>
-                <el-tag type="info" size="mini" style="margin-left:10px">公司</el-tag>
-            </el-row>
-        </el-card>
-
-                        <el-card style="width:60%;margin-left:20%;margin-top:10px">
-            <el-row>
-                <el-link style="font-size:22px;" type="primary">面经标题</el-link>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <span style="font-size:15px;color:rgb(32, 35, 41)">发布人</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">|</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">2020-10-21</span>
-                <el-badge :value="12" style="margin-left:10px;color:#61687c;font-size:15px;float:right">
-                    <el-button size="mini" type="primary">点赞</el-button>
-                </el-badge>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <el-tag type="info" size="mini">职位</el-tag>
-                <el-tag type="info" size="mini" style="margin-left:10px">公司</el-tag>
-            </el-row>
-        </el-card>
-
-                        <el-card style="width:60%;margin-left:20%;margin-top:10px">
-            <el-row>
-                <el-link style="font-size:22px;" type="primary">面经标题</el-link>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <span style="font-size:15px;color:rgb(32, 35, 41)">发布人</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">|</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">2020-10-21</span>
-                <el-badge :value="12" style="margin-left:10px;color:#61687c;font-size:15px;float:right">
-                    <el-button size="mini" type="primary">点赞</el-button>
-                </el-badge>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <el-tag type="info" size="mini">职位</el-tag>
-                <el-tag type="info" size="mini" style="margin-left:10px">公司</el-tag>
-            </el-row>
-        </el-card>
-
-                        <el-card style="width:60%;margin-left:20%;margin-top:10px">
-            <el-row>
-                <el-link style="font-size:22px;" type="primary">面经标题</el-link>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <span style="font-size:15px;color:rgb(32, 35, 41)">发布人</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">|</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">2020-10-21</span>
-                <el-badge :value="12" style="margin-left:10px;color:#61687c;font-size:15px;float:right">
-                    <el-button size="mini" type="primary">点赞</el-button>
-                </el-badge>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <el-tag type="info" size="mini">职位</el-tag>
-                <el-tag type="info" size="mini" style="margin-left:10px">公司</el-tag>
-            </el-row>
-        </el-card>
-
-                        <el-card style="width:60%;margin-left:20%;margin-top:10px">
-            <el-row>
-                <el-link style="font-size:22px;" type="primary">面经标题</el-link>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <span style="font-size:15px;color:rgb(32, 35, 41)">发布人</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">|</span>
-                <span style="margin-left:10px;color:#61687c;font-size:15px">2020-10-21</span>
-                <el-badge :value="12" style="margin-left:10px;color:#61687c;font-size:15px;float:right">
-                    <el-button size="mini" type="primary">点赞</el-button>
-                </el-badge>
-            </el-row>
-            <el-row style="margin-top:10px">
-                <el-tag type="info" size="mini">职位</el-tag>
-                <el-tag type="info" size="mini" style="margin-left:10px">公司</el-tag>
+                <el-tag type="info" size="mini">{{item.position}}</el-tag>
+                <el-tag type="info" size="mini" style="margin-left:10px">{{item.companyName}}</el-tag>
             </el-row>
         </el-card>
 
         <div style="text-align:center;margin-top:20px">
             <el-pagination
-            :page-size="4"
+            :page-size="5"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage"
             layout="total, prev, pager, next, jumper"
-            :total="400">
+            :total="total">
             </el-pagination>
         </div>
-        <el-dialog title="招聘内容" :visible.sync="dialogFormVisible1" center width="900px">
-            <el-form :model="form">
+
+        <!-- 查看内容 -->
+        <el-dialog title="面经内容" :visible.sync="detailView" center width="900px">
+            <el-form :model="detail">
+                <el-form-item label="标题" :label-width="'100px'">
+                    <el-input v-model="detail.title" readonly autocomplete="off"></el-input>
+                </el-form-item>
                 <el-form-item label="招聘职位" :label-width="'100px'">
-                    <el-input v-model="form.n1" autocomplete="off" readonly></el-input>
+                    <el-input v-model="detail.position" readonly autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="公司" :label-width="'100px'">
-                    <el-input v-model="form.n3" autocomplete="off" readonly></el-input>
+                    <el-input v-model="detail.companyName" readonly autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="详细内容" :label-width="'100px'">
-                    <el-input v-model="form.n2" autocomplete="off" readonly type="textarea"
-  :autosize="{ minRows: 1, maxRows: 100}"></el-input>
+                    <el-input v-model="detail.content" readonly autocomplete="off" type="textarea"
+  :autosize="{ minRows: 1, maxRows: 200}"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible1 = false">取 消</el-button>
-                <el-button type="primary" @click="dialogFormVisible1 = false">确 定</el-button>
+                <el-button @click="detailView = false">取 消</el-button>
+                <el-button type="primary" @click="detailView = false">确 认</el-button>
             </div>
         </el-dialog>
     </div>
@@ -153,29 +85,76 @@ export default {
     name: 'Interview',
     data() {
         return{
-            options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: '',
-        dialogFormVisible1: false,
-        form: {
-            n1: 'Java开发工程师',
-            n3: '京东集团',
-            n2: 'java基础\n1  jvm内存结构 内存区域划分及存储内容\n2 对象在初始化之后 怎么内存分配到回收的过程\n3 minorgc 属于哪个区域的回收'
+            interview: [],
+            search: {
+                pageNum: 1,
+                pageSize: 5,
+                title: '',
+                position: '',
+                companyName: ''
+            },
+            currentPage: 1,
+            total: 0,
+            companyList: [],
+            companyName: '',
+            searchText: '',
+            detailView: false,
+            detail: {
+                title: '',
+                position: '',
+                companyName: '',
+                content: ''
+            },
+            hotCondition: {
+                id: null,
+                hot: 1
+            }
         }
+    },
+    created() {
+        this.init();
+        this.initCompany();
+    },
+    methods: {
+        async init() {
+            const {data} = await this.$http.post("/interview/home", this.search);
+            this.interview = data.data.interview.records;
+            this.currentPage = data.data.interview.current;
+            this.total = data.data.interview.total;
+        },
+        async initCompany() {
+            const {data} = await this.$http.post("/recruitm/getCompany");
+            this.companyList = data.data.company;
+        },
+        async searchInterview() {
+            this.search.title = this.searchText;
+            this.search.position = this.searchText;
+            this.search.companyName = this.companyName;
+            const {data} = await this.$http.post("/interview/home", this.search);
+            this.interview = data.data.interview.records;
+            this.currentPage = data.data.interview.current;
+            this.total = data.data.interview.total;
+        },
+        async handleCurrentChange(val) {
+            this.search.pageNum = val;
+            const {data} = await this.$http.post('/recruitm/home', this.search);
+            this.school = data.data.interview.records;
+            this.total = data.data.interview.total;
+            this.currentPage = data.data.interview.current;
+        },
+        checkDetail(item) {
+            this.detail = item;
+            this.detailView = true;
+        },
+        addHot(item) {
+            this.$message.success("点赞成功");
+            item.hot = item.hot + 1;
+            this.hotCondition.id = item.id;
+            this.hotCondition.hot = item.hot;
+            this.$http.post("/interview/addhot", this.hotCondition)
+        },
+        delVal(){
+            this.companyName = null;
         }
     }
 }
